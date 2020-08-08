@@ -7,14 +7,24 @@ import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:typed_data/typed_data.dart' as typed;
+import 'package:uuid/uuid.dart';
+
+var uuidCall = Uuid();
+var uuid = uuidCall.v4();
+
+
+var client;
+var bus = busPage.BusPage();
+var control = controlPage.ControlPage();
+var settings = settingsPage.SettingsPage();
 
 Future<int> main() async {
     const url = 'lab.thewcl.com';
     const port = 1883;
-    const clientId = 'flutterTestApp';
+    var clientId = uuid;
     const username = '';
     const password = '';
-    final client = MqttServerClient(url, clientId);
+    client = MqttServerClient(url, clientId);
     client.port = port;
     client.secure = false;
     client.setProtocolV311();
@@ -63,16 +73,16 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
       appBar: new AppBar(title: new Text("CPU Connect"), backgroundColor: Colors.deepOrange, bottom: new TabBar(
           controller: controller,
           tabs: <Tab>[
-          new Tab(icon: Icon(Icons.border_vertical)), new Tab(icon: Icon(Icons.apps)), new Tab(icon: Icon(Icons.settings))
+          new Tab(icon: Icon(Icons.border_vertical), text: "Bus"), new Tab(icon: Icon(Icons.apps), text: "Control"), new Tab(icon: Icon(Icons.settings), text: "Settings")
         ]
       )
       ),
       body: new TabBarView(
         controller: controller,
         children: <Widget>[
-          new busPage.BusPage(),
-          new controlPage.ControlPage(),
-          new settingsPage.SettingsPage()
+          bus,
+          control,
+          settings
         ]
       )
     );
