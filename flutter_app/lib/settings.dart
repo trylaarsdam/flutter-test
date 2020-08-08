@@ -143,6 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
+                  Navigator.pop(context);
                   widget.flutterBlue.stopScan();
                   try {
                     await device.connect();
@@ -335,6 +336,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text("Bluetooth"),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            widget.flutterBlue.stopScan();
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.check_circle),
+          backgroundColor: Colors.green,
         ),
         body: _buildView(),
       );
