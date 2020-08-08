@@ -49,23 +49,25 @@ class _SettingsState extends State<Settings>
   }
 
   void switchChanged(bool value) {
-    setState(() {
-      isSwitched = value;
-      if (isSwitched == true) {
-        var topic = mainDart.uuid + '/settings';
-        final buff = typed.Uint8Buffer(2);
-        buff[0] = 'o'.codeUnitAt(0);
-        buff[1] = 'n'.codeUnitAt(0);
-        mainDart.client.publishMessage(topic, MqttQos.atLeastOnce, buff);
-      } else {
-        var topic = mainDart.uuid + '/settings';
-        final buff = typed.Uint8Buffer(3);
-        buff[0] = 'o'.codeUnitAt(0);
-        buff[1] = 'f'.codeUnitAt(0);
-        buff[2] = 'f'.codeUnitAt(0);
-        mainDart.client.publishMessage(topic, MqttQos.atLeastOnce, buff);
-      }
-    });
+    if (mounted) {
+      setState(() {
+        isSwitched = value;
+        if (isSwitched == true) {
+          var topic = mainDart.uuid + '/settings';
+          final buff = typed.Uint8Buffer(2);
+          buff[0] = 'o'.codeUnitAt(0);
+          buff[1] = 'n'.codeUnitAt(0);
+          mainDart.client.publishMessage(topic, MqttQos.atLeastOnce, buff);
+        } else {
+          var topic = mainDart.uuid + '/settings';
+          final buff = typed.Uint8Buffer(3);
+          buff[0] = 'o'.codeUnitAt(0);
+          buff[1] = 'f'.codeUnitAt(0);
+          buff[2] = 'f'.codeUnitAt(0);
+          mainDart.client.publishMessage(topic, MqttQos.atLeastOnce, buff);
+        }
+      });
+    }
   }
 
   @override
@@ -91,9 +93,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _addDeviceTolist(final BluetoothDevice device) {
     if (!widget.devicesList.contains(device)) {
-      setState(() {
-        widget.devicesList.add(device);
-      });
+      if(mounted) {
+        setState(() {
+          widget.devicesList.add(device);
+        });
+      }
     }
   }
 
@@ -154,9 +158,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   } finally {
                     _services = await device.discoverServices();
                   }
-                  setState(() {
-                    _connectedDevice = device;
-                  });
+                  if(mounted) {
+                    setState(() {
+                      _connectedDevice = device;
+                    });
+                  }
                 },
               ),
             ],
@@ -189,9 +195,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('READ', style: TextStyle(color: Colors.white)),
               onPressed: () async {
                 var sub = characteristic.value.listen((value) {
-                  setState(() {
-                    widget.readValues[characteristic.uuid] = value;
-                  });
+                  if (mounted) {
+                    setState(() {
+                      widget.readValues[characteristic.uuid] = value;
+                    });
+                  }
                 });
                 await characteristic.read();
                 sub.cancel();
