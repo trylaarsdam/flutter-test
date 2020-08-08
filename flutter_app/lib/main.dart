@@ -8,7 +8,13 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:typed_data/typed_data.dart' as typed;
 import 'package:uuid/uuid.dart';
+import 'package:flutter_blue/flutter_blue.dart';
+import 'package:system_setting/system_setting.dart';
 
+
+BluetoothDevice device;
+BluetoothState state;
+BluetoothDeviceState deviceState;
 
 var uuidCall = Uuid();
 var uuid = uuidCall.v4();
@@ -62,7 +68,32 @@ class MyTabsState extends State<MyTabs> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = new TabController(vsync: this, length: 3);
-  }
+    FlutterBlue.instance.state.listen((state) {
+      if(true) {
+        //alert to turn on bluetooth
+        AlertDialog(
+          title: Text('Bluetooth Required'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('You need to enable bluetooth'),
+                Text('For this app to work correctly'),
+              ],
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Turn on Bluetooth'),
+            onPressed: () {
+              SystemSetting.goto(SettingTarget.BLUETOOTH);
+            },
+
+        ),
+      ],
+        );
+      }
+    });
+    }
 
   @override
   void dispose() {

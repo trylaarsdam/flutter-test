@@ -26,7 +26,7 @@ dependencies:
   mqtt_client: ^7.3.0
   uuid: 2.2.0
   flutter_blue: ^0.6.3+1
-
+  system_setting: any
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
