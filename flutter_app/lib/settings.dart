@@ -26,6 +26,16 @@ class _SettingsState extends State<Settings> with AutomaticKeepAliveClientMixin<
   @override
   Widget build(BuildContext context) {
   return new Scaffold(
+    floatingActionButton: FloatingActionButton(
+      child: Icon(Icons.add),
+      backgroundColor: Colors.green,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SecondRoute()),
+        );
+      },
+    ),
   body:
   new Semantics(
   container: true,
@@ -57,4 +67,31 @@ class _SettingsState extends State<Settings> with AutomaticKeepAliveClientMixin<
   }
   @override
   bool get wantKeepAlive => true;
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Bluetooth Connect"),
+        backgroundColor: Colors.deepOrange,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(Icons.check_circle),
+        label: Text('Connect'),
+        tooltip: 'Connect to Bluetooth Device',
+        backgroundColor: Colors.green,
+        onPressed: () {
+          Navigator.pop(
+            context
+          );
+        },
+      ),
+      bottomNavigationBar: BottomAppBar(
+      ),
+      floatingActionButtonLocation:
+        FloatingActionButtonLocation.endFloat,
+      );
+  }
 }
