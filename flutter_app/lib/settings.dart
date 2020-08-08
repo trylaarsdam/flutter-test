@@ -99,8 +99,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    this.dispose();
-
     super.dispose();
   }
 
