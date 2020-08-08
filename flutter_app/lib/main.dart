@@ -42,7 +42,9 @@ Future<int> main() async {
     buff[3] = 'd'.codeUnitAt(0);
     client.publishMessage(topic, MqttQos.atLeastOnce, buff);
   runApp(new MaterialApp(
-    home: new MyTabs()
+    home: new MyTabs(),
+    theme: ThemeData(),
+    darkTheme: ThemeData.dark()
   ));
 }
 
