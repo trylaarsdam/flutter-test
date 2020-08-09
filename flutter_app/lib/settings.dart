@@ -380,7 +380,7 @@ class _BluetoothConnectState extends State<BluetoothConnect> {
             widget.flutterBlue.stopScan();
             Navigator.pop(context);
           },
-          child: Icon(Icons.cancel),
+          child: Icon(Icons.close),
           backgroundColor: Colors.red,
         ),
         body: _buildView(),
