@@ -35,7 +35,7 @@ class _SettingsState extends State<Settings>
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MyHomePage()),
+              MaterialPageRoute(builder: (context) => BluetoothConnect()),
             );
           },
         ),
@@ -74,8 +74,8 @@ class _SettingsState extends State<Settings>
   bool get wantKeepAlive => true;
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class BluetoothConnect extends StatefulWidget {
+  BluetoothConnect({Key key, this.title}) : super(key: key);
 
   final String title;
   final FlutterBlue flutterBlue = FlutterBlue.instance;
@@ -83,17 +83,17 @@ class MyHomePage extends StatefulWidget {
   final Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BluetoothConnectState createState() => _BluetoothConnectState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _BluetoothConnectState extends State<BluetoothConnect> {
   final _writeController = TextEditingController();
   BluetoothDevice _connectedDevice;
   List<BluetoothService> _services;
 
   _addDeviceTolist(final BluetoothDevice device) {
     if (!widget.devicesList.contains(device)) {
-      if(mounted) {
+      if (mounted) {
         setState(() {
           widget.devicesList.add(device);
         });
@@ -121,7 +121,36 @@ class _MyHomePageState extends State<MyHomePage> {
         _addDeviceTolist(result.device);
       }
     });
-    widget.flutterBlue.startScan();
+
+      widget.flutterBlue.startScan().catchError( (error) {
+        // set up the buttons
+        Widget cancelButton = FlatButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        );
+
+        // set up the AlertDialog
+        AlertDialog alert = AlertDialog(
+          title: Text("CPU Connect"),
+          content: Text(
+              "This device doesn't appear to have bluetooth capabilities. Please switch to a device that has bluetooth and try again."),
+          actions: [
+            cancelButton,
+          ],
+        );
+
+        // show the dialog
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return alert;
+          },
+        );
+      }
+    );
   }
 
   ListView _buildListViewOfDevices() {
@@ -158,8 +187,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   } finally {
                     _services = await device.discoverServices();
                   }
-                  if(mounted) {
+                  if (mounted) {
                     setState(() {
+                      print(device);
                       _connectedDevice = device;
                     });
                   }
@@ -345,12 +375,13 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text("Bluetooth"),
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             widget.flutterBlue.stopScan();
             Navigator.pop(context);
           },
-          child: Icon(Icons.check_circle),
+          icon: Icon(Icons.check_circle),
+          label: Text("Done"),
           backgroundColor: Colors.green,
         ),
         body: _buildView(),
