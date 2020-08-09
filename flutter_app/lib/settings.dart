@@ -375,14 +375,13 @@ class _BluetoothConnectState extends State<BluetoothConnect> {
         appBar: AppBar(
           title: Text("Bluetooth"),
         ),
-        floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: FloatingActionButton(
           onPressed: () {
             widget.flutterBlue.stopScan();
             Navigator.pop(context);
           },
-          icon: Icon(Icons.check_circle),
-          label: Text("Done"),
-          backgroundColor: Colors.green,
+          child: Icon(Icons.cancel),
+          backgroundColor: Colors.red,
         ),
         body: _buildView(),
       );
