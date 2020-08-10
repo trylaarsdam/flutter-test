@@ -124,7 +124,7 @@ class _BluetoothConnectState extends State<BluetoothConnect> {
 
       widget.flutterBlue.startScan().catchError( (error) {
         // set up the buttons
-        Widget cancelButton = FlatButton(
+        Widget cancelButton = FlatButton( 
           child: Text("Cancel"),
           onPressed: () {
             Navigator.pop(context);
