@@ -136,7 +136,7 @@ class _BluetoothConnectState extends State<BluetoothConnect> {
         AlertDialog alert = AlertDialog(
           title: Text("CPU Connect"),
           content: Text(
-              "This device doesn't appear to have bluetooth capabilities. Please switch to a device that has bluetooth and try again."),
+              "This device doesn't have bluetooth enabled or CPU Connect doesn't have permission to use bluetooth. Try enabling bluetooth and restarting the app."),
           actions: [
             cancelButton,
           ],
