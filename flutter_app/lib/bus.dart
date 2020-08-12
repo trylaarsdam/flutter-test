@@ -6,7 +6,6 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:typed_data/typed_data.dart' as typed;
 import 'package:flutter_app/main.dart' as mainDart;
-
 class BusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
