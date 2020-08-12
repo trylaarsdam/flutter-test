@@ -27,7 +27,8 @@ dependencies:
   uuid: 2.2.0
   flutter_blue: ^0.6.3+1
   system_setting: any
-  control_pad: any
+  mailer: ^3.0.3
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
