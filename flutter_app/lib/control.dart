@@ -9,52 +9,105 @@ import './main.dart' as mainDart;
 class ControlPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        child: new Control()
-    );
+    return new Container(child: new Control());
   }
 }
 
 class Control extends StatefulWidget {
   Control({Key key}) : super(key: key);
+
   @override
   _ControlState createState() => _ControlState();
 }
 
-class _ControlState extends State<Control> with AutomaticKeepAliveClientMixin<Control> {
-  bool isSwitched = false;
+class _ControlState extends State<Control>
+    with AutomaticKeepAliveClientMixin<Control> {
+  int component = 0;
+  bool ctrlLine0 = false;
+  bool ctrlLine1 = false;
+  bool ctrlLine2 = false;
+  bool ctrlLine3 = false;
+  bool ctrlLine4 = false;
+  bool ctrlLine5 = false;
+  bool ctrlLine6 = false;
+  bool ctrlLine7 = false;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body:
-        new Semantics(
+        body: new Semantics(
             container: true,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[Switch(onChanged: switchChanged, value:isSwitched)]))
-
-    );
+                children: [
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_7, value: ctrlLine7)
+                  ]),
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_6, value: ctrlLine6)
+                  ]),
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_5, value: ctrlLine5)
+                  ]),
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_4, value: ctrlLine4)
+                  ]),
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_3, value: ctrlLine3)
+                  ]),
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_2, value: ctrlLine2)
+                  ]),
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_1, value: ctrlLine1)
+                  ]),
+                  new Column(children: [
+                    Checkbox(onChanged: ctrlLineHandler_0, value: ctrlLine0)
+                  ])
+                ])));
   }
-  void switchChanged(bool value) {
-    setState(() {
-      isSwitched=value;
-      if(isSwitched == true){
-        var topic = mainDart.uuid + '/control';
-        final buff = typed.Uint8Buffer(2);
-        buff[0] = 'o'.codeUnitAt(0);
-        buff[1] = 'n'.codeUnitAt(0);
-        mainDart.client.publishMessage(topic, MqttQos.atLeastOnce, buff);
-      }
-      else{
-        var topic = mainDart.uuid + '/control';
-        final buff = typed.Uint8Buffer(3);
-        buff[0] = 'o'.codeUnitAt(0);
-        buff[1] = 'f'.codeUnitAt(0);
-        buff[2] = 'f'.codeUnitAt(0);
-        mainDart.client.publishMessage(topic, MqttQos.atLeastOnce, buff);
-      }
+
+  void ctrlLineHandler_0(bool value){
+    setState((){
+      ctrlLine0 = value;
     });
   }
+  void ctrlLineHandler_1(bool value){
+    setState((){
+      ctrlLine1 = value;
+    });
+  }
+  void ctrlLineHandler_2(bool value){
+    setState((){
+      ctrlLine2 = value;
+    });
+  }
+  void ctrlLineHandler_3(bool value){
+    setState((){
+      ctrlLine3 = value;
+    });
+  }
+  void ctrlLineHandler_4(bool value){
+    setState((){
+      ctrlLine4 = value;
+    });
+  }
+  void ctrlLineHandler_5(bool value){
+    setState((){
+      ctrlLine5 = value;
+    });
+  }
+  void ctrlLineHandler_6(bool value){
+    setState((){
+      ctrlLine6 = value;
+    });
+  }
+  void ctrlLineHandler_7(bool value){
+    setState((){
+      ctrlLine7 = value;
+    });
+  }
+
   @override
   bool get wantKeepAlive => true;
 }
